@@ -3,7 +3,9 @@ import { PoolPair, PoolPairSymbol } from '@/types/RoutingTypes';
 
 export class DexService {
   static getPool(symbol: PoolPairSymbol): PoolPair | undefined {
-    return poolPairs.filter((poolPair) => symbol === poolPair.symbol)[0];
+    const tokens = symbol.split('-');
+    const eitherOrder = [`${tokens[0]}-${tokens[1]}`, `${tokens[1]}-${tokens[0]}`];
+    return poolPairs.filter((poolPair) => eitherOrder.includes(poolPair.symbol))[0];
   }
 
   static validateInputs(fromToken: string, toToken: string, poolPair?: string): [boolean, string] {
