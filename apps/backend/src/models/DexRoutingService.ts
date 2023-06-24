@@ -2,18 +2,25 @@ import { poolPairs } from '@/db/PoolDb';
 import { AllRoutesResult, BestRouteResult, PoolPair, TokenSymbol } from '@/types/RoutingTypes';
 
 export class DexRoutingService {
-  static _calculateReturnAmount(route: PoolPair[]): number {
+  static _calculateReturnAmount(start: TokenSymbol, route: PoolPair[]): number {
     let amount = 1;
+    let curr = start;
 
     for (const pair of route) {
-      const [tokenAValue, tokenBValue] = pair.priceRatio;
-      const tokenAAmount = pair.tokenA === route[0].tokenA ? amount : amount * tokenBValue;
-      const tokenBAmount = pair.tokenB === route[0].tokenA ? amount : amount * tokenAValue;
-      amount = Math.max(tokenAAmount, tokenBAmount);
+      if (pair.tokenA === curr) {
+        amount *= pair.priceRatio[1] / pair.priceRatio[0];
+        curr = pair.tokenB;
+      } else if (pair.tokenB === curr) {
+        amount *= pair.priceRatio[0] / pair.priceRatio[1];
+        curr = pair.tokenA;
+      } else {
+        throw new Error('Invalid route');
+      }
     }
 
     return amount;
   }
+
   static async listAllRoutes(fromToken: TokenSymbol, toToken: TokenSymbol): Promise<AllRoutesResult> {
     const allRoutes: PoolPair[][] = [];
     const visited: Set<TokenSymbol> = new Set();
@@ -65,7 +72,7 @@ export class DexRoutingService {
     let estimatedReturn = 0;
 
     for (const route of allRoutes) {
-      const returnAmount = this._calculateReturnAmount(route);
+      const returnAmount = this._calculateReturnAmount(fromToken, route);
 
       if (returnAmount > estimatedReturn) {
         bestRoute = route;

@@ -63,21 +63,21 @@ describe('should get routes by from and to token', () => {
   });
 
   it('should return 404 for invalid combination', async () => {
-    const response = await request(app).get('/api/v1/routes/from/AVAX/to/ETH');
+    const response = await request(app).get('/api/v1/routes/from/XTZ/to/AVAX');
     expect(response.status).toBe(StatusEnum.NOT_FOUND);
     expect(response.body).toEqual({ message: 'No route found!' });
   });
 
   it('should get routes by pool pair', async () => {
-    const response = await request(app).get('/api/v1/routes/from/ETH/to/DFI/ETH-DFI');
+    const response = await request(app).get('/api/v1/routes/from/BTC/to/ETH/BTC-ETH');
     expect(response.status).toBe(StatusEnum.OK);
     expect(response.body).toEqual({
       message: 'Fetched routes successfully!',
       route: {
-        symbol: 'ETH-DFI',
-        tokenA: 'ETH',
-        tokenB: 'DFI',
-        priceRatio: [1, 5],
+        symbol: 'BTC-ETH',
+        tokenA: 'BTC',
+        tokenB: 'ETH',
+        priceRatio: [1, 16],
       },
     });
   });

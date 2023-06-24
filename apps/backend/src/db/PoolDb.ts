@@ -1,42 +1,42 @@
 import { PoolPair } from '@/types/RoutingTypes';
 
-// Added USDT pairs to the sample data to teset more combinations
+// Added SOL-AVAX pair to add one that the others can't reach
 export const poolPairs: PoolPair[] = [
   {
     symbol: 'ETH-DFI',
     tokenA: 'ETH',
     tokenB: 'DFI',
-    priceRatio: [1, 5], // 1 ETH === 5 DFI
+    priceRatio: [1, 5163], // 1 ETH === 5163 DFI
   },
   {
     symbol: 'BTC-DFI',
     tokenA: 'BTC',
     tokenB: 'DFI',
-    priceRatio: [2, 1337], // 2 BTC === 1,337 DFI
+    priceRatio: [1, 83811], // 1 BTC === 83,811 DFI
   },
   {
-    symbol: 'DOGE-DFI',
-    tokenA: 'DOGE',
+    symbol: 'USDT-DFI',
+    tokenA: 'USDT',
     tokenB: 'DFI',
-    priceRatio: [18933, 5], // 18,933 DOGE === 5 DFI
+    priceRatio: [1, 3], // 1 USDT === 3 DFI
   },
   {
-    symbol: 'DOGE-ETH',
-    tokenA: 'DOGE',
+    symbol: 'AVAX-ETH',
+    tokenA: 'AVAX',
     tokenB: 'ETH',
-    priceRatio: [18617, 1], // 18,617 DOGE === 1 ETH
+    priceRatio: [143, 1], // 143 AVAX === 1 ETH
   },
   {
     symbol: 'BTC-ETH',
     tokenA: 'BTC',
     tokenB: 'ETH',
-    priceRatio: [1, 132], // 1 BTC === 132 ETH
+    priceRatio: [1, 16], // 1 BTC === 132 ETH
   },
   {
     symbol: 'BTC-USDT',
     tokenA: 'BTC',
     tokenB: 'USDT',
-    priceRatio: [1, 35000], // 35,000 BTC === 1 USDT
+    priceRatio: [1, 30000], // 30,000 BTC === 1 USDT
   },
   {
     symbol: 'ETH-USDT',
@@ -48,13 +48,13 @@ export const poolPairs: PoolPair[] = [
     symbol: 'DOGE-USDT',
     tokenA: 'DOGE',
     tokenB: 'USDT',
-    priceRatio: [0.3, 1], // 0.3 DOGE === 1 USDT
+    priceRatio: [14, 1], // 14 DOGE === 1 USDT
   },
   {
-    symbol: 'SOL-AVAX',
-    tokenA: 'SOL',
-    tokenB: 'AVAX',
-    priceRatio: [1, 1.3], // 1 SOL === 1.3 AVAX
+    symbol: 'XTZ-SOL',
+    tokenA: 'XTZ',
+    tokenB: 'SOL',
+    priceRatio: [1, 1.3], // 1 DFI === 1.3 SOL
   },
 ];
 
