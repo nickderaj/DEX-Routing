@@ -1,26 +1,9 @@
 import { availableTokens, poolPairs } from '@/db/PoolDb';
-import { PoolPair, PoolPairSymbol, TokenSymbol } from '@/types/RoutingTypes';
+import { PoolPair, PoolPairSymbol } from '@/types/RoutingTypes';
 
 export class DexService {
-  static listPools(): PoolPair[] {
-    return poolPairs;
-  }
-
   static getPool(symbol: PoolPairSymbol): PoolPair | undefined {
-    const pools = this.listPools();
-    return pools.filter((poolPair) => symbol === poolPair.symbol)[0];
-  }
-
-  static listTokens(): TokenSymbol[] {
-    const tokens: Set<TokenSymbol> = new Set();
-
-    const pools = this.listPools();
-    pools.forEach((poolPair) => {
-      tokens.add(poolPair.tokenA);
-      tokens.add(poolPair.tokenB);
-    });
-
-    return [...tokens];
+    return poolPairs.filter((poolPair) => symbol === poolPair.symbol)[0];
   }
 
   static validateInputs(fromToken: string, toToken: string, poolPair?: string): [boolean, string] {
@@ -47,8 +30,7 @@ export class DexService {
       return;
     }
 
-    const pools = DexService.listPools();
-    const relevantPools = pools.filter((pool) => pool.tokenA === fromToken || pool.tokenB === fromToken);
+    const relevantPools = poolPairs.filter((pool) => pool.tokenA === fromToken || pool.tokenB === fromToken);
 
     for (const pool of relevantPools) {
       const nextToken = pool.tokenA === fromToken ? pool.tokenB : pool.tokenA;

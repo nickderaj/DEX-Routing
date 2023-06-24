@@ -57,4 +57,6 @@ const tokens = poolPairs.reduce((acc, pool) => {
   acc[pool.tokenB] = true;
   return acc;
 }, {} as Record<string, boolean>);
+
 export const availableTokens = Object.keys(tokens);
+export const availableSymbols = poolPairs.map((pool) => pool.symbol);

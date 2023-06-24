@@ -1,15 +1,23 @@
+import { availableSymbols, availableTokens, poolPairs } from '@/db/PoolDb';
 import { DexService } from '@/models/DexService';
 import { StatusEnum } from '@/types/ApiTypes';
 import { PoolPair } from '@/types/RoutingTypes';
 import { Request } from 'express';
 
 export class DexController {
-  static async listAllTokens() {
-    const tokens: string[] = DexService.listTokens();
-    return { statusCode: StatusEnum.OK, data: { message: 'Fetched tokens successfully!', tokens } };
+  static async getAllTokens() {
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched tokens successfully!', tokens: availableTokens } };
   }
 
-  static async listAllRoutes(req: Request) {
+  static async getAllPools() {
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched pools successfully!', pools: poolPairs } };
+  }
+
+  static async getAllSymbols() {
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched symbols successfully!', symbols: availableSymbols } };
+  }
+
+  static async getAllRoutes(req: Request) {
     const { fromToken, toToken } = req.params;
 
     // 1. Validate tokens exist
@@ -24,7 +32,7 @@ export class DexController {
     return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', routes } };
   }
 
-  static async listRouteByPool(req: Request) {
+  static async getRouteByPool(req: Request) {
     const { fromToken, toToken, poolPair } = req.params;
 
     // 1. Validate tokens exist
