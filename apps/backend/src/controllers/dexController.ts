@@ -63,6 +63,6 @@ export class DexController {
     const data = await DexRoutingService.getBestRoute(fromToken, toToken);
     if (!data.bestRoute.length) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'No route found!' } };
 
-    return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully', data } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully!', data } };
   }
 }

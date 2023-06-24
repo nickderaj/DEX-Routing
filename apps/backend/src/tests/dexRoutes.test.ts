@@ -90,3 +90,36 @@ describe('should get routes by from and to token', () => {
     });
   });
 });
+
+describe('should get best routes by from and to token', () => {
+  it('should get routes for valid combination', async () => {
+    const response = await request(app).get('/api/v1/routes/best/from/ETH/to/DFI');
+    expect(response.status).toBe(StatusEnum.OK);
+    expect(response.body).toEqual({
+      message: 'Fetched route successfully!',
+      data: expect.objectContaining({
+        fromToken: 'ETH',
+        toToken: 'DFI',
+        bestRoute: expect.any(Array), // don't want to hard code the values as it might change as the DB grows
+        estimatedReturn: expect.any(Number),
+      }),
+    });
+  });
+
+  it('should return 404 if from and to are the same', async () => {
+    const response = await request(app).get('/api/v1/routes/best/from/ETH/to/ETH');
+    expect(response.status).toBe(StatusEnum.NOT_FOUND);
+    expect(response.body).toEqual({ message: 'Tokens must be different!' });
+  });
+
+  it('should return 404 if there is a missing parameter', async () => {
+    const response = await request(app).get('/api/v1/routes/best/from/ETH/to/');
+    expect(response.status).toBe(StatusEnum.NOT_FOUND);
+  });
+
+  it('should return 404 for invalid combination', async () => {
+    const response = await request(app).get('/api/v1/routes/best/from/XTZ/to/AVAX');
+    expect(response.status).toBe(StatusEnum.NOT_FOUND);
+    expect(response.body).toEqual({ message: 'No route found!' });
+  });
+});
