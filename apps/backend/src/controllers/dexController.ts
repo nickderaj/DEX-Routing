@@ -6,7 +6,6 @@ import { Request } from 'express';
 export class DexController {
   static async listAllTokens() {
     const tokens: string[] = DexService.listTokens();
-
     return { statusCode: StatusEnum.OK, data: { message: 'Fetched tokens successfully!', tokens } };
   }
 

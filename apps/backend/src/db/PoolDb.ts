@@ -52,4 +52,9 @@ export const poolPairs: PoolPair[] = [
   },
 ];
 
-export const availableTokens = Object.values(poolPairs).map((pool) => pool.symbol);
+const tokens = poolPairs.reduce((acc, pool) => {
+  acc[pool.tokenA] = true;
+  acc[pool.tokenB] = true;
+  return acc;
+}, {} as Record<string, boolean>);
+export const availableTokens = Object.keys(tokens);

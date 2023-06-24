@@ -1,4 +1,5 @@
 import app from '@/app';
+import { availableTokens } from '@/db/PoolDb';
 import { StatusEnum } from '@/types/ApiTypes';
 import request from 'supertest';
 
@@ -9,7 +10,7 @@ it('should return OK for the health check route', async () => {
 });
 
 // it('should provide example dex state', async () => {
-//   const response = await request(app).get('api/v1/routes/from/ETH/to/DFI');
+//   const response = await request(app).get('/api/v1/routes/from/ETH/to/DFI');
 //   expect(response.status).toBe(StatusEnum.OK);
 //   expect(response.body).toEqual(
 //     expect.arrayContaining([
@@ -22,25 +23,27 @@ it('should return OK for the health check route', async () => {
 //   );
 // });
 
-// it('should get pool by symbol', async () => {
-//   const response = await request(app).get('api/v1/routes/from/ETH/to/DFI/ETH-DFI');
-//   expect(response.status).toBe(StatusEnum.OK);
-//   expect(response.body).toEqual({
-//     symbol: 'ETH-DFI',
-//     tokenA: 'ETH',
-//     tokenB: 'DFI',
-//     priceRatio: [1, 5],
-//   });
-// });
+it('should get pool by symbol', async () => {
+  const response = await request(app).get('/api/v1/routes/from/ETH/to/DFI/ETH-DFI');
+  expect(response.status).toBe(StatusEnum.OK);
+  expect(response.body).toEqual({
+    message: 'Fetched routes successfully!',
+    route: {
+      symbol: 'ETH-DFI',
+      tokenA: 'ETH',
+      tokenB: 'DFI',
+      priceRatio: [1, 5],
+    },
+  });
+});
 
-// it('should provide all tokens', async () => {
-//   const response = await request(app).get('/');
-//   console.log(response);
-//   expect(response.status).toBe(StatusEnum.OK);
-//   expect(response.body).toEqual(
-//     expect.objectContaining({ message: 'Fetched tokens successfully!', tokens: expect.arrayContaining(availableTokens) }),
-//   );
-// });
+it('should provide all tokens', async () => {
+  const response = await request(app).get('/api/v1/routes/tokens');
+  expect(response.status).toBe(StatusEnum.OK);
+  expect(response.body).toEqual(
+    expect.objectContaining({ message: 'Fetched tokens successfully!', tokens: expect.arrayContaining(availableTokens) }),
+  );
+});
 
 // This doesn't really test anything, it's just an
 // example of how we can simulate different dex states
