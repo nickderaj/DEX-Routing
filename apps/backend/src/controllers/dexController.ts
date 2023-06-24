@@ -1,9 +1,16 @@
 import { DexService } from '@/models/DexService';
 import { StatusEnum } from '@/types/ApiTypes';
+import { PoolPair } from '@/types/RoutingTypes';
 import { Request } from 'express';
 
 export class DexController {
-  static listAllRoutes(req: Request) {
+  static async listAllTokens() {
+    const tokens: string[] = DexService.listTokens();
+
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched tokens successfully!', tokens } };
+  }
+
+  static async listAllRoutes(req: Request) {
     const { fromToken, toToken } = req.params;
 
     // 1. Validate tokens exist
@@ -15,7 +22,23 @@ export class DexController {
     // 2. Find all the routes
     const routes: string[][] = DexService.findAllRoutes(fromToken, toToken);
 
-    return { statusCode: StatusEnum.OK, data: { message: 'test', routes } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', routes } };
+  }
+
+  static async listRouteByPool(req: Request) {
+    const { fromToken, toToken, poolPair } = req.params;
+
+    // 1. Validate tokens exist
+    const [isValid, errorMessage] = DexService.validateInputs(fromToken, toToken, poolPair);
+    if (!isValid) {
+      return { statusCode: StatusEnum.NOT_FOUND, data: { message: errorMessage } };
+    }
+
+    // 2. Find all the routes
+    const route: PoolPair | null = DexService.getPool(poolPair) || null;
+
+    if (!route) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'Pool pair not found!' } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', route } };
   }
 
   static async getBestRoute(req: Request) {
@@ -56,6 +79,6 @@ export class DexController {
       }
     }
 
-    return { statusCode: StatusEnum.OK, data: { message: 'test', bestRoute } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully', route: bestRoute } };
   }
 }

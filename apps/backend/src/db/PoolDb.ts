@@ -51,3 +51,5 @@ export const poolPairs: PoolPair[] = [
     priceRatio: [0.3, 1], // 0.3 DOGE === 1 USDT
   },
 ];
+
+export const availableTokens = Object.values(poolPairs).map((pool) => pool.symbol);

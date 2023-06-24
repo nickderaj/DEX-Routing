@@ -5,7 +5,6 @@ export interface PoolPair {
   priceRatio: [number, number];
 }
 
-export const availableTokens = ['ETH', 'BTC', 'DOGE', 'DFI'];
 export type PoolPairSymbol = string;
 export type TokenSymbol = string;
 

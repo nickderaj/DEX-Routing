@@ -1,5 +1,5 @@
-import { poolPairs } from '@/db/PoolDb';
-import { PoolPair, PoolPairSymbol, TokenSymbol, availableTokens } from '@/types/RoutingTypes';
+import { availableTokens, poolPairs } from '@/db/PoolDb';
+import { PoolPair, PoolPairSymbol, TokenSymbol } from '@/types/RoutingTypes';
 
 export class DexService {
   static listPools(): PoolPair[] {
@@ -23,8 +23,12 @@ export class DexService {
     return [...tokens];
   }
 
-  static validateInputs(fromToken: string, toToken: string): [boolean, string] {
+  static validateInputs(fromToken: string, toToken: string, poolPair?: string): [boolean, string] {
     const validTokens = availableTokens.includes(fromToken.toUpperCase()) && availableTokens.includes(toToken.toUpperCase());
+    if (poolPair) {
+      const validPoolPair = poolPairs.map((pool) => pool.symbol).includes(poolPair.toUpperCase());
+      if (!validPoolPair) return [false, 'Invalid pool pair!'];
+    }
     if (!validTokens) return [false, 'Invalid tokens!'];
 
     return [true, ''];
@@ -61,3 +65,5 @@ export class DexService {
     return allRoutes;
   }
 }
+
+export type DexServiceType = typeof DexService;
