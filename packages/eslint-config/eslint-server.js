@@ -1,19 +1,16 @@
 module.exports = {
-  extends: ['eslint:recommended', 'turbo'],
-  env: {
-    node: true,
-    es6: true,
-  },
+  extends: ['eslint:recommended', 'turbo', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint', 'jest'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
-  overrides: [
-    {
-      files: ['**/__tests__/**/*'],
-      env: {
-        jest: true,
-      },
-    },
-  ],
+  env: {
+    es6: true,
+    node: true,
+  },
+  rules: {
+    'no-console': 1, // warning
+  },
 };
