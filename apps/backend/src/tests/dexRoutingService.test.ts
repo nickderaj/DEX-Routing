@@ -6,7 +6,17 @@ describe('listAllRoutes function', () => {
     expect(response).toEqual({
       fromToken: 'ETH',
       toToken: 'DFI',
-      routes: expect.any(Array), // Don't want to hardcode the values in case the DB changes
+      routes: expect.arrayContaining([
+        // Don't want to hardcode the values in case the DB changes
+        expect.arrayContaining([
+          expect.objectContaining({
+            symbol: expect.any(String),
+            tokenA: expect.any(String),
+            tokenB: expect.any(String),
+            priceRatio: expect.arrayContaining([expect.any(Number), expect.any(Number)]),
+          }),
+        ]),
+      ]),
     });
   });
 
@@ -26,7 +36,15 @@ describe('getBestRoute function', () => {
     expect(response).toEqual({
       fromToken: 'ETH',
       toToken: 'DFI',
-      bestRoute: expect.any(Object), // Don't want to hardcode the values in case the DB changes
+      bestRoute: expect.arrayContaining([
+        // Don't want to hardcode the values in case the DB changes
+        expect.objectContaining({
+          symbol: expect.any(String),
+          tokenA: expect.any(String),
+          tokenB: expect.any(String),
+          priceRatio: expect.arrayContaining([expect.any(Number), expect.any(Number)]),
+        }),
+      ]),
       estimatedReturn: expect.any(Number), // Don't want to hardcode the values in case the DB changes
     });
   });
