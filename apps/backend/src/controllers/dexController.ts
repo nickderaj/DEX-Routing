@@ -1,4 +1,5 @@
 import { availableSymbols, availableTokens, poolPairs } from '@/db/PoolDb';
+import { DexRoutingService } from '@/models/DexRoutingService';
 import { DexService } from '@/models/DexService';
 import { StatusEnum } from '@/types/ApiTypes';
 import { PoolPair } from '@/types/RoutingTypes';
@@ -27,9 +28,10 @@ export class DexController {
     }
 
     // 2. Find all the routes
-    const routes: string[][] = DexService.findAllRoutes(fromToken, toToken);
+    const data = await DexRoutingService.listAllRoutes(fromToken, toToken);
 
-    return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', routes } };
+    if (!data.routes.length) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'No route found!' } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', data } };
   }
 
   static async getRouteByPool(req: Request) {
@@ -51,41 +53,16 @@ export class DexController {
   static async getBestRoute(req: Request) {
     const { fromToken, toToken } = req.params;
 
-    // 1. Validate inputs
+    // 1. Validate tokens exist
     const [isValid, errorMessage] = DexService.validateInputs(fromToken, toToken);
     if (!isValid) {
       return { statusCode: StatusEnum.NOT_FOUND, data: { message: errorMessage } };
     }
 
-    // 2. Find all the routes
-    const allRoutes = DexService.findAllRoutes(fromToken, toToken);
+    // 2. Find best routes
+    const data = await DexRoutingService.getBestRoute(fromToken, toToken);
+    if (!data.bestRoute.length) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'No route found!' } };
 
-    let bestRoute: string[] = [];
-    let bestAmount = 0;
-
-    // 3. Loop through to find the best possible route
-    for (const route of allRoutes) {
-      let currentToken = fromToken;
-      let currentAmount = 1;
-
-      for (let i = 0; i < route.length; i++) {
-        const pool = DexService.getPool(`${currentToken}-${route[i]}`);
-        if (pool) {
-          const amountOut = DexService.calculateSwapAmount(currentAmount, pool.priceRatio);
-          currentAmount = amountOut;
-          currentToken = route[i];
-        } else {
-          // If the pool doesn't exist, skip this route
-          break;
-        }
-      }
-
-      if (currentToken === toToken && currentAmount > bestAmount) {
-        bestRoute = route;
-        bestAmount = currentAmount;
-      }
-    }
-
-    return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully', route: bestRoute } };
+    return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully', data } };
   }
 }
