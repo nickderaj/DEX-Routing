@@ -36,19 +36,25 @@ export const poolPairs: PoolPair[] = [
     symbol: 'BTC-USDT',
     tokenA: 'BTC',
     tokenB: 'USDT',
-    priceRatio: [35000, 1], // 35,000 BTC === 1 USDT
+    priceRatio: [1, 35000], // 35,000 BTC === 1 USDT
   },
   {
     symbol: 'ETH-USDT',
     tokenA: 'ETH',
     tokenB: 'USDT',
-    priceRatio: [2200, 1], // 2,200 ETH === 1 USDT
+    priceRatio: [1, 2200], // 2,200 ETH === 1 USDT
   },
   {
     symbol: 'DOGE-USDT',
     tokenA: 'DOGE',
     tokenB: 'USDT',
     priceRatio: [0.3, 1], // 0.3 DOGE === 1 USDT
+  },
+  {
+    symbol: 'SOL-AVAX',
+    tokenA: 'SOL',
+    tokenB: 'AVAX',
+    priceRatio: [1, 1.3], // 1 SOL === 1.3 AVAX
   },
 ];
 

@@ -7,6 +7,8 @@ export class DexService {
   }
 
   static validateInputs(fromToken: string, toToken: string, poolPair?: string): [boolean, string] {
+    if (fromToken.toUpperCase() === toToken.toUpperCase()) return [false, 'Tokens must be different!'];
+
     const validTokens = availableTokens.includes(fromToken.toUpperCase()) && availableTokens.includes(toToken.toUpperCase());
     if (poolPair) {
       const validPoolPair = poolPairs.map((pool) => pool.symbol).includes(poolPair.toUpperCase());
