@@ -30,7 +30,7 @@ export class DexController {
     // 2. Find all the routes
     const data = await DexRoutingService.listAllRoutes(fromToken, toToken);
 
-    if (!data.routes.length) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'No route found!' } };
+    if (!data.routes.length) return { statusCode: StatusEnum.NO_CONTENT, data: { message: 'No route found!' } };
     return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', data } };
   }
 
@@ -46,7 +46,7 @@ export class DexController {
     // 2. Find all the routes
     const route: PoolPair | null = DexService.getPool(poolPair) || null;
 
-    if (!route) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'Pool pair not found!' } };
+    if (!route) return { statusCode: StatusEnum.NO_CONTENT, data: { message: 'Pool pair not found!' } };
     return { statusCode: StatusEnum.OK, data: { message: 'Fetched routes successfully!', route } };
   }
 
@@ -61,7 +61,7 @@ export class DexController {
 
     // 2. Find best routes
     const data = await DexRoutingService.getBestRoute(fromToken, toToken);
-    if (!data.bestRoute.length) return { statusCode: StatusEnum.NOT_FOUND, data: { message: 'No route found!' } };
+    if (!data.bestRoute.length) return { statusCode: StatusEnum.NO_CONTENT, data: { message: 'No route found!' } };
 
     return { statusCode: StatusEnum.OK, data: { message: 'Fetched route successfully!', data } };
   }

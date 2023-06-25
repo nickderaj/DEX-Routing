@@ -62,10 +62,9 @@ describe('should get routes by from and to token', () => {
     expect(response.status).toBe(StatusEnum.NOT_FOUND);
   });
 
-  it('should return 404 for invalid combination', async () => {
+  it('should return 204 for invalid combination', async () => {
     const response = await request(app).get('/api/v1/routes/from/XTZ/to/AVAX');
-    expect(response.status).toBe(StatusEnum.NOT_FOUND);
-    expect(response.body).toEqual({ message: 'No route found!' });
+    expect(response.status).toBe(StatusEnum.NO_CONTENT);
   });
 
   it('should get routes by pool pair', async () => {
@@ -117,9 +116,8 @@ describe('should get best routes by from and to token', () => {
     expect(response.status).toBe(StatusEnum.NOT_FOUND);
   });
 
-  it('should return 404 for invalid combination', async () => {
+  it('should return 204 for invalid combination', async () => {
     const response = await request(app).get('/api/v1/routes/best/from/XTZ/to/AVAX');
-    expect(response.status).toBe(StatusEnum.NOT_FOUND);
-    expect(response.body).toEqual({ message: 'No route found!' });
+    expect(response.status).toBe(StatusEnum.NO_CONTENT);
   });
 });
