@@ -1,30 +1,35 @@
-## Getting Started
+# Documentation
 
-First, run the development server:
+## Table of Contents
 
-```bash
-yarn dev
-```
+1. [API](#api)
+2. [Components](#components)
+3. [Constants](#constants)
+4. [Pages](#pages)
+5. [Styles](#styles)
+6. [Types](#types)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Contains all the api routes, e.g. `getAllRoutes` & `getBestRoute`.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Components
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Contains all the components that aren't already in the shared `ui` library.
+- In this case, there is only a Layout that is specific to Next.js as it uses next/head to set the metadata for the page & the modal for displaying the best route.
 
-## Learn More
+## Constants
 
-To learn more about Next.js, take a look at the following resources:
+- Contains all constants, in this very simple webapp there is only the API_URL
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn/foundations/about-nextjs) - an interactive Next.js tutorial.
+## Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Contains all the pages, as well as the `_app.ts`x`and`\_document.tsx` files that are specific to Next.js.
 
-## Deploy on Vercel
+## Styles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github.com&utm_medium=referral&utm_campaign=turborepo-readme) from the creators of Next.js.
+- CSS files, there is only a global CSS file that resets the styles & imports Tailwind.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Types
+
+- I have just added the Environment Variables to the `process.env` type so that TypeScript doesn't complain when using them.
