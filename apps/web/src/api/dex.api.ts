@@ -17,7 +17,6 @@ export const getRouteByPool = async (fromToken: string, toToken: string) => {
 };
 
 export const fetchTokens = async () => {
-  console.log('api url: ', API_URL);
   const res = await axios.get(`${API_URL}/api/v1/routes/tokens`);
   return res.data;
 };

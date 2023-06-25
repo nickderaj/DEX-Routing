@@ -7,6 +7,7 @@ import './styles.css';
 import Button from './components/Button';
 import Modal from './components/Modal';
 import ModalPortal from './components/ModalPortal';
+import SearchBar from './components/SearchBar';
 import Spinner from './components/Spinner';
 
-export { Button, Modal, ModalPortal, Spinner };
+export { Button, Modal, ModalPortal, SearchBar, Spinner };
