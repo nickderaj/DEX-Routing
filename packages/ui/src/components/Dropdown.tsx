@@ -11,7 +11,7 @@ const Dropdown: React.FC<IDropdown> = ({ value, setValue, options, ...props }) =
       onChange={(e) => setValue(e.target.value)}
       {...props}
       className="w-full h-10 px-3 text-white placeholder:neutral-600 border border-stroke rounded-sm
-       bg-transparent focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pl-10"
+       bg-transparent focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
     >
       {options.map((option) => (
         <option key={option} value={option}>
