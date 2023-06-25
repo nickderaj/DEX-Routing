@@ -1,5 +1,6 @@
 import { getBestRoute } from '@/api/dex.api';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Dropdown, Modal } from 'ui';
 
 type Props = {
@@ -22,10 +23,18 @@ const BestPoolModal: React.FC<Props> = ({ token, tokens, onClose }) => {
     try {
       setIsLoading(true);
       const res = await getBestRoute(token, selected);
-      setPrice(res.data.estimatedReturn);
-      // TODO: disable this when going live, just to simulate loading time
-      setTimeout(() => setIsLoading(false), 800);
+      if (!res) {
+        toast('This token pair is not supported', { type: 'error' });
+        return setIsLoading(false);
+      }
+
+      // TODO: remove this timeout when going live, just to simulate loading time
+      setTimeout(() => {
+        setIsLoading(false);
+        setPrice(res.data.estimatedReturn);
+      }, 800);
     } catch (error) {
+      toast('Something went wrong!', { type: 'error' });
       setIsLoading(false);
     }
   };
