@@ -4,6 +4,7 @@
 2. [Layout](#layout)
 3. [Tests](#tests)
 4. [Screenshots](#screenshots)
+5. [Documentation](#documentation)
 
 ## Project Setup
 
@@ -77,3 +78,8 @@ The packages folder contains all the global configs, e.g. eslint, prettier and j
 | <img src="screenshots\8.png" width="500"> |
 | :---------------------------------------: |
 |   **Figure 8.** _All tests successful_    |
+
+## Documentation
+
+- [Backend Documentation](./apps/backend/README.md)
+- [Frontend Documentation](./apps/web/README.md)
