@@ -1,7 +1,7 @@
 import { fetchPools, fetchSymbols, fetchTokens } from '@/api/dex.api';
 import { useQueries } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Button, SearchBar } from 'ui';
+import { Button, Dropdown, SearchBar } from 'ui';
 import PrimaryLayout from '../components/Layout/PrimaryLayout';
 import { PageWithLayout } from './page';
 

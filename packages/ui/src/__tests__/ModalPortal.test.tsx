@@ -16,7 +16,6 @@ describe('Modal', () => {
   });
   afterEach(() => {
     cleanup();
-    const modalRoot = screen.getByTestId('modal-root');
     modalRoot.remove();
   });
 
@@ -28,7 +27,7 @@ describe('Modal', () => {
       </ModalPortal>,
     );
 
-    const modalRoot = screen.getByTestId('modal-root');
+    modalRoot = screen.getByTestId('modal-root');
     const div = screen.getByText('Magical');
 
     expect(modalRoot).toBeVisible();
@@ -43,8 +42,7 @@ describe('Modal', () => {
       </ModalPortal>,
     );
 
-    const modalRoot = screen.getByTestId('modal-root');
-
+    modalRoot = screen.getByTestId('modal-root');
     expect(modalRoot).toBeVisible();
     expect(() => screen.getByText('Magical')).toThrow();
   });
